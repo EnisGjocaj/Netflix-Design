@@ -1,0 +1,86 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	background-color: black;
+	font-family: 'Raleway', sans-serif;
+}
+
+#header {
+	margin-bottom: 180px;
+}
+
+#img{
+	width: 250px;
+	position: relative;
+	left: 40%;
+	margin-top: 0;
+}
+#title {
+	color: white;
+	font-size: 43px;
+    position: relative;
+    top: 85px;
+    left: 45px;
+    font-weight: bold;
+}
+
+#button-form{
+	margin-top: 90px;
+	margin-left: 33px;
+
+	%sharedStylesBtn{
+		border-radius: 10%;
+		width: 99px;
+		height: 45px;
+		font-weight: bold;
+		font-size: 17px;
+	}
+	#play{
+		color: black;
+		background-color: white;
+        @extend %sharedStylesBtn;
+	}
+	#list{
+		color: white;
+		background-color: gray;
+		@extend %sharedStylesBtn;
+	}
+}
+
+#text-underBtn{
+	margin-left: 33px;
+	margin-top: 6px;
+	width: 366px;
+	#desc{
+		color: white;
+		font-weight: bold;
+	}
+}
+
+#movies, #netflixOriginals {
+	color: white;
+	font-size: 24px;
+	font-weight: bold;
+	margin-left: 30px;
+
+}
+
+#originalMovies, #trending, #top_rated{
+	display: flex;
+	flex-direction: row;
+	margin-top: 30px;
+	margin-bottom: 30px;
+
+}
+
+#originalMovies img,
+.movies__container img {
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+}
+
+#originalMovies img:hover,
+.movies__container img:hover {
+  transform: scale(1.1);
+}

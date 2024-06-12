@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/netflix.css">
+	<title>Netflix</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="container">
+       <header id="header">
+          <!-- <div id="divImg">
+           <img id="img">
+          </div> -->
+          <div id="image-container">
+             <img src="img/netflix.webp" id="img">  
+          </div>
+       	  <h1 id="title">Title</h1> 
+       	  <form id="button-form">
+       	  	 <button id="play">Play</button>
+       	  	 <button id="list">My list</button>
+       	  </form>
+       	  <div id="text-underBtn">
+       	  	 <p id="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tristique magna magna, vit...</p>
+       	  </div>
+       </header>
+       <main id="main">
+       	  <div id="netflixOriginals">
+       	  	 <div id="netflixOriginals_header">
+       	  	 	<h2 id="netflixOriginalsH2" class="movies__container">NETFLIX ORIGINALS</h2>
+       	  	 </div>
+       	  	 <div id="originalMovies" class="originalMovies">
+       	  	    <!--Original Movies list here-->	
+       	  	 </div>
+       	  </div>
+           <div id="movies">
+               <div id="wishlistHeader">
+                  <h2 id="wishlist">Wishlist</h2>
+               </div>
+               <!--HERE-->
+                <div id="wishlist" class="movies__container"></div>
+                <div id="headerTrending">
+                   <h2 id="trendingNow">Trending Now</h2>
+                </div>
+                <div id="trending" class="movies__container">
+                   <!-- Trending Movies List Here -->
+                </div>
+                <div class="movies__header">
+                   <h2 id="topRated">Top Rated</h2>
+                </div>
+                <div id="top_rated" class="movies__container">
+                   <!-- Top Rated Movies List Here -->
+                </div>
+            </div>
+       </main>
+       <footer id="footer">
+       	  
+       </footer>
+    </div>
+   <script>
+       
+       window.onload = () => {
+
+          getOriginals()
+          getTrendingNow()
+          getTopRated()
+
+       }
+
+       const fetchMovies = (url, dom_element, path_type) => {
+           fetch(url)
+           .then(response => {
+               if (response.ok) {
+                  return response.json()
+               }
+               else{
+                  throw new Error('Something went wrong')
+               }
+           })
+           .then(response =>{
+              showMovies(response, dom_element, path_type);
+           })
+           .catch(error => console.log(error))
+       }
+
+       const showMovies = (movies, dom_element, path_type) => {
+
+          const element = document.querySelector(dom_element)
+
+          for(const movie of movies.results){
+
+              const image = document.createElement('img');
+
+              image.setAttribute('data-id', movie.id)
+
+              image.src = `https://image.tmdb.org/t/p/original${movie[path_type]}`;
+
+              //the code below is for test START
+              image.style.width = '160px';
+              image.style.height = '242px';
+
+              image.style.marginRight = '5px';
+              image.style.marginLeft = '5px';
+
+              if (path_type == 'backdrop_path') {
+                  image.style.height = '135px';
+                  image.style.width = '220px';
+
+              }
+
+              //END
+
+              element.appendChild(image);
+          }
+       }
+
+       function getOriginals(){
+           let url = 'https://api.themoviedb.org/3/discover/tv?api_key=19f84e11932abbc79e6d83f82d6d1045&with_networks=213';
+
+           fetchMovies(url, '#originalMovies', 'poster_path')
+       }
+
+       function getTrendingNow(){
+          let url = 'https://api.themoviedb.org/3/trending/movie/week?api_key=19f84e11932abbc79e6d83f82d6d1045';
+
+          fetchMovies(url, '#trending', 'backdrop_path')
+       }
+
+       function getTopRated(){
+          let url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=19f84e11932abbc79e6d83f82d6d1045&language=en-US&page=1';
+
+          fetchMovies(url, '#top_rated', 'backdrop_path')
+       }
+
+   </script>
+</body>
+</html>
+
+<!--TO DO
+THIS IS THE SCALING
+
+.original__movies img,
+.movies__container img {
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+}
+
+.original__movies img:hover,
+.movies__container img:hover {
+  transform: scale(1.1);
+}
+-->
